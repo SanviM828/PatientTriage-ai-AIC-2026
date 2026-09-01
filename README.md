@@ -102,8 +102,10 @@ not intended for direct clinical deployment.
   unavailable.
 - Allows manually triaged patients to remain in the queue during an
   outage.
-- Automatically reviews pending manually triaged patients when the
-  AI service becomes available again.
+- Allows the workflow to return to AI-assisted assessment when the AI
+  service is available again.
+- Pending patients can then be reassessed through the normal assessment
+  workflow.
 
 ### Audit and Assessment History
 
@@ -169,7 +171,7 @@ connects the application to the triage engine.
               +----------------------+
 ```
 
-The Flask routes and their connection to `assess_patient()` are present in the current backend. :contentReference[oaicite:0]{index=0}
+The Flask routes and their connection to `assess_patient()` are present in the current backend.
 
 ---
 
@@ -207,13 +209,11 @@ Waiting-Time Monitoring
 ```
 
 
-The frontend creates an assessment history entry at initial assessment and stores the current patient information alongside the result. :contentReference[oaicite:1]{index=1}
+The frontend creates an assessment history entry at initial assessment and stores the current patient information alongside the result.
 
 ---
 
 # 3. Triage Engine
-
-This one needs to be particularly careful because this is where we explain the **actual implementation**, not oversell it as a medical AI model.
 
 The PatientTriage.ai prototype uses a structured, rule-based triage
 engine implemented in Python. It is designed to demonstrate how
@@ -445,7 +445,7 @@ PatientTriage-ai-AIC-2026/
 | `README.md` | Project documentation |
 
 The Flask backend exposes the main assessment, reassessment, and health
-endpoints and passes patient information to the triage engine. :contentReference[oaicite:0]{index=0}
+endpoints and passes patient information to the triage engine.
 
 ---
 
@@ -469,7 +469,7 @@ limitations.
 - **Simulated AI availability:** The current backend health endpoint
   reports the AI service as available; offline/manual triage behaviour
   is demonstrated at the application level rather than through a
-  production AI infrastructure. :contentReference[oaicite:1]{index=1}
+  production AI infrastructure. 
 - **Local prototype deployment:** The application is designed for local
   demonstration using the Flask development server rather than
   production hospital deployment.
