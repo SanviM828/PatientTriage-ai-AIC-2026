@@ -16,119 +16,19 @@ decision-making loop by providing explainable recommendations,
 reassessment capabilities, human overrides, and fallback manual
 triage when the AI service is unavailable.
 
-## Overview
-
-Emergency departments can experience sudden increases in patient
-volume, making it difficult to continuously reassess patients and
-maintain an appropriate order of priority. PatientTriage.ai addresses
-this problem by providing a dynamic triage workflow that combines
-initial patient assessment with ongoing queue monitoring.
-
-Patient information such as the chief complaint, symptoms, vital
-signs, medical history, medications, mobility, and consciousness is
-submitted to the triage engine. The engine evaluates the available
-information using a structured rule-based hierarchy and returns a
-priority level, confidence score, deterioration risk, and reasons
-supporting the assessment.
-
-The resulting assessment is used to maintain a live priority queue.
-As patients wait, the system monitors waiting time and can trigger
-reassessment when predefined prototype thresholds are exceeded.
-Clinical staff can update patient information, reassess the patient,
-or override the AI recommendation when clinical judgment indicates
-that a different priority is appropriate.
-
-PatientTriage.ai is intended as a prototype demonstration of
-AI-assisted decision support. It does not diagnose patients and is
-not intended for direct clinical deployment.
-
 ## Features
 
-### Dynamic Priority Queue
+- Dynamic priority queue with automatic re-ranking
+- Rule-based triage assessment with explainable reasons
+- Waiting-time monitoring and reassessment alerts
+- Patient update and reassessment workflow
+- Nurse priority override with recorded reason
+- Audit log and assessment history
+- Manual triage mode for simulated AI unavailability
+- Surge simulation for high patient volume
+- Browser-based state persistence
 
-- Maintains a live queue of patients ordered according to their
-  current triage priority.
-- Displays patient priority, deterioration risk, confidence,
-  complaint, and waiting time.
-- Automatically re-ranks the queue when a patient's priority changes.
-
-### Explainable Triage Assessment
-
-- Evaluates patient presentation, symptoms, vital signs, medical
-  history, medications, mobility, consciousness, and other
-  contextual information.
-- Produces a priority category from CRITICAL to LOW, with REVIEW
-  used when the available information is insufficient or uncertain.
-- Provides reasons supporting the generated recommendation.
-- Reports an assessment confidence value and deterioration risk.
-
-### Continuous Reassessment
-
-- Allows clinical staff to update patient information after the
-  initial assessment.
-- Re-evaluates the patient using the updated information.
-- Maintains assessment history so that previous assessments can be
-  reviewed.
-
-### Waiting-Time Monitoring
-
-- Tracks how long each patient has been waiting.
-- Applies prototype waiting-time thresholds to identify patients
-  who may require reassessment.
-- Can elevate patients to an urgent-review state when waiting-time
-  thresholds are exceeded.
-
-### Human-in-the-Loop Override
-
-- Allows a nurse to override the AI-generated priority.
-- Requires a clinical reason for every manual override.
-- Records the previous priority, final priority, reason, and
-  timestamp.
-- Re-ranks the queue after an override.
-
-### Fail-Safe Handling
-
-- Detects insufficient patient information before generating a
-  normal assessment.
-- Requests human review instead of automatically downgrading a
-  patient when critical information is missing.
-- Preserves the existing patient priority during an unsafe
-  reassessment.
-
-### AI Offline / Manual Triage Mode
-
-- Detects AI service availability through a health-check endpoint.
-- Switches the interface to manual triage when the AI service is
-  unavailable.
-- Allows manually triaged patients to remain in the queue during an
-  outage.
-- Allows the workflow to return to AI-assisted assessment when the AI
-  service is available again.
-- Pending patients can then be reassessed through the normal assessment
-  workflow.
-
-### Audit and Assessment History
-
-- Records important system and human actions.
-- Maintains assessment history for individual patients.
-- Records events such as AI assessments, reassessments, waiting-time
-  alerts, and nurse overrides.
-
-### Demonstration and Surge Simulation
-
-- Provides a preconfigured demo queue for testing the interface.
-- Supports a surge simulation that increases the demonstration
-  queue from 15 to 45 simulated patients.
-- Provides controls for clearing and repopulating the queue.
-
-### Browser-Based Data Persistence
-
-- Stores the current prototype queue and related state using browser
-  local storage.
-- Allows queue state to persist across page refreshes during
-  demonstration.
-
-  ## Architecture
+## Architecture
 
 PatientTriage.ai follows a lightweight client-server architecture.
 The frontend handles patient input, queue management and user
