@@ -476,7 +476,7 @@ Clone the repository:
 
 ```bash
 git clone https://github.com/SanviM828/PatientTriage-ai-AIC-2026
-cd PatientTriage-ai-AIC-2026-
+cd PatientTriage-ai-AIC-2026
 ```
 
 Create a virtual environment:
