@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>PatientTriage.ai</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+
+<body>
+
+    <!-- =====================================================
+         HEADER
+         ===================================================== -->
+
+        <header>
+
+            <div class="header-title">
+                <h1>PatientTriage.ai</h1>
+                <p>AI-assisted Emergency Department Triage</p>
+            </div>
+
+
+            <div class="header-actions">
+
+                <button id="addPatientButton">
+                    Add Patient
+                </button>
+
+                <button id="demoQueueButton" type="button">
+                    Load Demo Queue
+                </button>
+
+                <button id="surgeButton" type="button">
+                    Simulate Surge
+                </button>
+
+                <button id="clearQueueButton" type="button">
+                    Clear Queue
+                </button>
+
+            </div>
+
+
+            <div
+                id="aiModeIndicator"
+                class="ai-mode-indicator ai-online"
+            >
+                ● AI ONLINE
+            </div>
+
+        </header>
+
+
+    <!-- =====================================================
+         MAIN DASHBOARD
+         ===================================================== -->
+
+<main>
+
+    <div class="dashboard-layout">
+
+        <!-- =================================================
+             LEFT: LIVE PRIORITY QUEUE
+             ================================================= -->
+
+        <div class="queue-panel">
+
+            <div class="queue-header">
+
+                <div class="queue-title-compact">
+                    <span>LIVE PRIORITY QUEUE</span>
+                </div>
+
+                <div class="queue-actions">
+
+                    <span id="queueCount" class="queue-count">
+                        0 patients
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- Patient Queue -->
+
+            <div id="patientQueue">
+
+                <div id="emptyQueue" class="empty-queue">
+
+                    <p>No patients in queue.</p>
+                    <p>Add a patient to begin triage.</p>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- =================================================
+             RIGHT: PATIENT DETAILS
+             ================================================= -->
+
+        <div
+            id="patientModal"
+            class="patient-details-panel hidden"
+        >
+            <div id="modalContent"></div>
+        </div>
+
+    </div>
+
+    <!-- =====================================================
+        AUDIT LOG BUTTON
+        ===================================================== -->
+
+    <div class="audit-log-button-container">
+
+        <button
+            id="auditLogButton"
+            class="audit-log-button"
+            onclick="openAuditLog()"
+        >
+            Audit Log
+        </button>
+
+    </div>
+
+</main>
+
+
+
+    <!-- =====================================================
+         ADD PATIENT MODAL
+         ===================================================== -->
+
+    <div id="addPatientModal" class="modal hidden">
+
+        <!-- Dark background -->
+        <div
+            class="modal-overlay"
+            onclick="closeAddPatient()"
+        ></div>
+
+
+        <!-- Popup -->
+        <div class="modal-box add-patient-modal">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+
+                <div>
+                    <h2>Add New Patient</h2>
+                    <p>Enter the information available at triage.</p>
+                </div>
+
+                <button
+                    type="button"
+                    class="modal-close"
+                    onclick="closeAddPatient()"
+                >
+                    ×
+                </button>
+
+            </div>
+
+
+
+            <!-- =================================================
+                 PATIENT FORM
+                 ================================================= -->
+
+            <form id="patientForm" class="patient-form">
+
+
+                <!-- Patient Demographics -->
+                <div class="form-section">
+
+                    <h4>Patient Demographics</h4>
+
+
+                    <label for="patientAge">
+                        Age
+                    </label>
+
+                    <input
+                        type="number"
+                        id="patientAge"
+                        min="0"
+                        max="120"
+                        placeholder="Enter age"
+                    >
+
+
+                    <label for="patientSex">
+                        Sex
+                    </label>
+
+                    <select id="patientSex">
+
+                        <option value="">
+                            Select
+                        </option>
+
+                        <option value="female">
+                            Female
+                        </option>
+
+                        <option value="male">
+                            Male
+                        </option>
+
+                        <option value="other">
+                            Other / Prefer not to say
+                        </option>
+
+                    </select>
+
+
+                    <label for="pregnancyStatus">
+                        Pregnancy Status (if applicable)
+                    </label>
+
+                    <select id="pregnancyStatus">
+
+                        <option value="not_applicable">
+                            Not applicable
+                        </option>
+
+                        <option value="unknown">
+                            Unknown
+                        </option>
+
+                        <option value="not_pregnant">
+                            Not pregnant
+                        </option>
+
+                        <option value="pregnant">
+                            Pregnant
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+
+                <!-- Current Presentation -->
+                <div class="form-section">
+
+                    <h4>Current Presentation</h4>
+
+
+                    <label for="chiefComplaint">
+                        Chief Complaint
+                    </label>
+
+                    <input
+                        type="text"
+                        id="chiefComplaint"
+                        placeholder="What is the main reason for coming to the ED?"
+                    >
+
+
+                    <label for="symptoms">
+                        Symptoms
+                    </label>
+
+                    <textarea
+                        id="symptoms"
+                        placeholder="Describe current symptoms"
+                        rows="3"
+                    ></textarea>
+
+
+                    <label for="symptomDuration">
+                        Duration / Onset
+                    </label>
+
+                    <input
+                        type="text"
+                        id="symptomDuration"
+                        placeholder="e.g. 30 minutes, since yesterday"
+                    >
+
+
+                    <label for="painSeverity">
+                        Pain Severity (0–10)
+                    </label>
+
+                    <input
+                        type="number"
+                        id="painSeverity"
+                        min="0"
+                        max="10"
+                        placeholder="0–10"
+                    >
+
+
+                    <label for="visibleSigns">
+                        Visible / Observable Signs
+                    </label>
+
+                    <textarea
+                        id="visibleSigns"
+                        placeholder="e.g. visible bleeding, severe distress, deformity"
+                        rows="3"
+                    ></textarea>
+
+
+                    <label for="injuryMechanism">
+                        Mechanism of Injury / Accident
+                    </label>
+
+                    <textarea
+                        id="injuryMechanism"
+                        placeholder="If applicable, describe how the injury occurred"
+                        rows="2"
+                    ></textarea>
+
+                </div>
+
+
+
+                <!-- Vital Signs -->
+                <div class="form-section">
+
+                    <h4>Vital Signs</h4>
+
+
+                    <div class="input-grid">
+
+
+                        <div>
+
+                            <label for="heartRate">
+                                Heart Rate (bpm)
+                            </label>
+
+                            <input
+                                type="number"
+                                id="heartRate"
+                                placeholder="e.g. 82"
+                            >
+
+                        </div>
+
+
+                        <div>
+
+                            <label for="bloodPressure">
+                                Blood Pressure (mmHg)
+                            </label>
+
+                            <input
+                                type="text"
+                                id="bloodPressure"
+                                placeholder="e.g. 120/80"
+                            >
+
+                        </div>
+
+
+                        <div>
+
+                            <label for="spo2">
+                                SpO₂ (%)
+                            </label>
+
+                            <input
+                                type="number"
+                                id="spo2"
+                                min="0"
+                                max="100"
+                                placeholder="e.g. 98"
+                            >
+
+                        </div>
+
+
+                        <div>
+
+                            <label for="respiratoryRate">
+                                Respiratory Rate (/min)
+                            </label>
+
+                            <input
+                                type="number"
+                                id="respiratoryRate"
+                                placeholder="e.g. 16"
+                            >
+
+                        </div>
+
+
+                        <div>
+
+                            <label for="temperature">
+                                Temperature (°C)
+                            </label>
+
+                            <input
+                                type="number"
+                                id="temperature"
+                                step="0.1"
+                                placeholder="e.g. 37.0"
+                            >
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- Relevant History -->
+                <div class="form-section">
+
+                    <h4>Relevant History</h4>
+
+
+                    <label for="medicalHistory">
+                        Known Conditions
+                    </label>
+
+                    <textarea
+                        id="medicalHistory"
+                        placeholder="e.g. diabetes, COPD, hypertension"
+                        rows="2"
+                    ></textarea>
+
+
+                    <label for="medications">
+                        Medications
+                    </label>
+
+                    <textarea
+                        id="medications"
+                        placeholder="Current relevant medications"
+                        rows="2"
+                    ></textarea>
+
+
+                    <label for="allergies">
+                        Allergies
+                    </label>
+
+                    <textarea
+                        id="allergies"
+                        placeholder="Known allergies or 'None known'"
+                        rows="2"
+                    ></textarea>
+
+
+                    <label for="previousEpisodes">
+                        Previous Relevant Episodes
+                    </label>
+
+                    <textarea
+                        id="previousEpisodes"
+                        placeholder="Relevant previous episodes, if known"
+                        rows="2"
+                    ></textarea>
+
+
+                    <label class="checkbox-label">
+
+                        <input
+                            type="checkbox"
+                            id="noHistory"
+                        >
+
+                        No history available
+
+                    </label>
+
+                </div>
+
+
+
+                <!-- Functional / Contextual Information -->
+                <div class="form-section">
+
+                    <h4>
+                        Functional / Contextual Information
+                    </h4>
+
+
+                    <label for="communicationDifficulty">
+                        Disability / Communication Difficulty
+                    </label>
+
+                    <textarea
+                        id="communicationDifficulty"
+                        placeholder="Describe any relevant communication or accessibility difficulty"
+                        rows="2"
+                    ></textarea>
+
+
+                    <label for="mobility">
+                        Ability to Walk / Move
+                    </label>
+
+                    <select id="mobility">
+
+                        <option value="">
+                            Select
+                        </option>
+
+                        <option value="normal">
+                            Normal
+                        </option>
+
+                        <option value="limited">
+                            Limited
+                        </option>
+
+                        <option value="unable">
+                            Unable
+                        </option>
+
+                        <option value="unknown">
+                            Unknown
+                        </option>
+
+                    </select>
+
+
+                    <label for="consciousness">
+                        Consciousness / Mental Status
+                    </label>
+
+                    <select id="consciousness">
+
+                        <option value="">
+                            Select
+                        </option>
+
+                        <option value="alert">
+                            Alert
+                        </option>
+
+                        <option value="confused">
+                            Confused
+                        </option>
+
+                        <option value="drowsy">
+                            Drowsy
+                        </option>
+
+                        <option value="unresponsive">
+                            Unresponsive
+                        </option>
+
+                        <option value="unknown">
+                            Unknown
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+
+                <!-- Assess Button -->
+
+                <button
+                    type="button"
+                    id="assessPatientButton"
+                >
+                    Assess Patient
+                </button>
+
+
+                <!-- AI Assessment Result -->
+
+                <div
+                    id="assessmentResult"
+                    class="assessment-result hidden"
+                ></div>
+
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =====================================================
+         PATIENT DETAILS MODAL
+         ===================================================== -->
+
+    <div id="patientModal" class="modal hidden">
+
+        <!-- Dark background -->
+        <div
+            class="modal-overlay"
+            onclick="closePatientDetails()"
+        ></div>
+
+
+        <!-- Popup -->
+        <div class="modal-box">
+
+            <div id="modalContent"></div>
+
+        </div>
+
+    </div>
+
+    <!-- =====================================================
+        AI UNAVAILABLE ATTENTION MODAL
+        ===================================================== -->
+
+    <div id="aiUnavailableModal" class="ai-unavailable-modal hidden">
+
+        <div class="ai-unavailable-overlay"></div>
+
+        <div class="ai-unavailable-box">
+
+            <div class="ai-unavailable-icon">
+                ⚠
+            </div>
+
+            <h2>AI TRIAGE UNAVAILABLE</h2>
+
+            <p class="ai-unavailable-main">
+                The AI assessment cannot be completed right now.
+            </p>
+
+            <div class="ai-unavailable-warning">
+                <strong>Manual clinical triage remains active.</strong>
+                <br>
+                Do not wait for the AI recommendation.
+            </div>
+
+            <p class="ai-unavailable-subtext">
+                The patient's existing priority has been preserved.
+                Please continue assessment using normal clinical procedures.
+            </p>
+
+            <button
+                class="ai-unavailable-button"
+                onclick="closeAIUnavailableModal()"
+            >
+                Continue with Manual Triage
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         JAVASCRIPT
+         ===================================================== -->
+
+    <script src="{{ url_for('static', filename='app.js') }}"></script>
+
+
+    <!-- =====================================================
+        AUDIT LOG MODAL
+        ===================================================== -->
+
+    <div
+        id="auditLogModal"
+        class="audit-log-modal hidden"
+    >
+
+        <div class="audit-log-modal-content">
+
+            <div class="audit-log-modal-header">
+
+                <div>
+                    <h2>Audit Log</h2>
+
+                    <p>
+                        Record of AI assessments, reassessments,
+                        and human overrides
+                    </p>
+                </div>
+
+                <button
+                    class="audit-log-close"
+                    onclick="closeAuditLog()"
+                >
+                    ×
+                </button>
+
+            </div>
+
+            <div id="auditLogCount" class="audit-log-count"></div>
+            
+            <!-- Existing audit log will be rendered here -->
+
+            <div id="auditLogContent">
+
+            </div>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>
