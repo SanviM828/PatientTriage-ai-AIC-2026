@@ -473,19 +473,11 @@ The current prototype uses Flask as its backend dependency. No external database
 ## 9.2 Installation
 
 Clone the repository:
-`
-```bash
-git clone https://github.com/SanviM828/PatientTriage-ai-AIC-2026
-cd PatientTriage-ai-AIC-2026
-```
-
-Install Flask using pip:
 
 ```bash
-pip install Flask
+git clone <repository-url>
+cd PatientTriage-ai-AIC-2026-
 ```
-
-The prototype can then be run directly using the Flask application.
 
 Create a virtual environment:
 
@@ -507,9 +499,20 @@ venv\Scripts\activate
 source venv/bin/activate
 ```
 
+Install Flask:
+
+```bash
+pip install Flask
+```
+
+Move into the application directory:
+
+```bash
+cd code
+```
 ## 9.3 Running Flask
 
-Start the Flask application:
+Start the Flask application from the `code` directory:
 
 ```bash
 python app.py
