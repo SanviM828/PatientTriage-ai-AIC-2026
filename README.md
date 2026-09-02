@@ -251,7 +251,7 @@ URGENT REVIEW
 MODERATE
    |
    v
-LOW
+  LOW
 ```
 
 ## Requirements
