@@ -456,138 +456,9 @@ A production healthcare system would require substantially stronger controls aro
 
 ---
 
-# 9. Deployment & Future Scope
+# 9. Running the Prototype
 
-PatientTriage.ai is designed so that the prototype architecture can serve as a starting point for a more comprehensive hospital deployment.
-
-The transition from prototype to production would involve both **technical integration** and **clinical validation**.
-
-## 9.1 Hospital Integration
-
-A production deployment could integrate PatientTriage.ai with existing emergency department infrastructure.
-
-Potential integrations include:
-
-- Hospital patient-management systems
-- EHR platforms
-- Existing triage systems
-- Bed and department status systems
-- Hospital communication and alerting infrastructure
-
-Such integration would allow the system to operate using information already available within the hospital rather than requiring manual re-entry of all patient information.
-
-## 9.2 EHR Integration
-
-Integration with an EHR could allow relevant patient information to be securely retrieved and updated within the triage workflow.
-
-This could reduce duplicate data entry and provide a more complete information context for clinical staff.
-
-Any such integration would require appropriate interoperability standards, access controls, data validation, and hospital-specific governance.
-
-## 9.3 Authentication and Role-Based Access Control
-
-A production system would require authenticated user accounts and **role-based access control (RBAC)**.
-
-Different users could receive permissions appropriate to their responsibilities, for example:
-
-- Triage nurses
-- Physicians
-- Supervisors
-- Administrators
-
-Access to patient information, overrides, configuration, and audit records would be controlled according to the user's role.
-
-## 9.4 Encryption and Audit Infrastructure
-
-Production deployment would require appropriate security controls for data both **in transit and at rest**.
-
-The prototype's audit functionality could be extended into a secure, persistent audit infrastructure capable of recording:
-
-- User identity
-- Patient-related actions
-- Assessment and reassessment events
-- Overrides
-- Manual triage decisions
-- System and AI availability events
-- Configuration changes
-
-Audit records would support accountability, troubleshooting, and system governance.
-
-## 9.5 Clinical Validation
-
-Before being used in real clinical workflows, the triage logic would require systematic clinical validation.
-
-This could include:
-
-1. Review of the assessment criteria by qualified clinical experts
-2. Testing against representative and edge-case scenarios
-3. Retrospective evaluation using appropriately governed datasets
-4. Prospective evaluation under controlled conditions
-5. Monitoring for errors, unintended behavior, and performance differences across patient groups
-6. Establishment of appropriate clinical governance and approval processes
-
-The objective would be to establish whether the system provides useful and reliable decision support without introducing unacceptable clinical risk.
-
-## 9.6 Privacy and Regulatory Considerations
-
-A production deployment in India would need to account for applicable data-protection requirements, healthcare privacy practices, and institutional policies.
-
-The deployment architecture should therefore be designed around principles such as:
-
-- Appropriate notice and consent or other applicable legal basis
-- Purpose limitation
-- Data minimization
-- Role-based access
-- Secure storage and transmission
-- Appropriate retention and deletion policies
-- Auditability and accountability
-- Appropriate handling of emergency situations
-- Additional safeguards for sensitive or vulnerable patient populations
-
-The current prototype should **not be interpreted as a production-compliant healthcare data system**. These controls represent requirements and design considerations for future deployment.
-
-## 9.7 Future ML/AI Development
-
-The current prototype uses a structured rule-based engine so that its behavior remains transparent and inspectable.
-
-Future versions could investigate machine-learning or other AI approaches to support more advanced capabilities, subject to appropriate clinical validation and governance.
-
-Potential areas of development include:
-
-- Learning from appropriately governed clinical datasets
-- More sophisticated risk prediction
-- Temporal deterioration modelling
-- Improved uncertainty estimation
-- Personalised risk assessment
-- Detection of complex symptom combinations
-- Continuous model monitoring and evaluation
-
-Any future AI component would remain subject to the same human-in-the-loop principle: **AI should augment clinical expertise, not replace it.**
-
-## 9.8 Deployment Roadmap
-
-The proposed evolution from the current prototype can be summarized as:
-
-```text
-Current Prototype
-      ↓
-Clinical Review of Rules
-      ↓
-Secure Backend & Authentication
-      ↓
-EHR / Hospital Integration
-      ↓
-Clinical Validation
-      ↓
-Controlled Pilot Deployment
-      ↓
-Continuous Monitoring & Governance
-      ↓
-Production-Ready Decision Support
-```
-# 10. Running the Prototype
-
-## 10.1 Requirements
+## 9.1 Requirements
 
 The prototype requires:
 
@@ -599,7 +470,7 @@ The prototype requires:
 
 The current prototype uses Flask as its backend dependency. No external database or machine-learning framework is required.
 
-## 10.2 Installation
+## 9.2 Installation
 
 Clone the repository:
 `
@@ -636,7 +507,7 @@ venv\Scripts\activate
 source venv/bin/activate
 ```
 
-## 10.3 Running Flask
+## 9.3 Running Flask
 
 Start the Flask application:
 
@@ -646,7 +517,7 @@ python app.py
 
 The Flask development server will start and display the local address in the terminal.
 
-## 10.4 Browser Access
+## 9.4 Browser Access
 
 Open the local address shown by Flask in a web browser.
 
@@ -669,7 +540,7 @@ Once the dashboard loads, users can:
 9. Inspect the audit log
 10. Use surge simulation for testing
 
-## 10.5 Project Structure
+## 9.5 Project Structure
 
 ```text
 PatientTriage-ai-AIC-2026-/
@@ -705,7 +576,7 @@ The separation between the frontend, Flask API layer, and triage engine keeps th
 
 ---
 
-# 11. Conclusion
+# 10. Conclusion
 
 PatientTriage.ai demonstrates how an emergency department triage workflow can move beyond a **static, one-time priority assignment** toward a more dynamic process that incorporates monitoring, reassessment, explainability, and clinician oversight.
 
