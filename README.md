@@ -475,7 +475,7 @@ The current prototype uses Flask as its backend dependency. No external database
 Clone the repository:
 `
 ```bash
-git clone <repository-url>
+git clone https://github.com/SanviM828/PatientTriage-ai-AIC-2026
 cd PatientTriage-ai-AIC-2026
 ```
 
