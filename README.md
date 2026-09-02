@@ -139,10 +139,10 @@ connects the application to the triage engine.
                     Clinical Staff
                          |
                          v
-              +----------------------+
-              |      Web Frontend    |
+              +------------------------+
+              |      Web Frontend      |
               | HTML / CSS / JavaScript|
-              +----------+-----------+
+              +----------+-------------+
                          |
                     HTTP / JSON
                          |
@@ -150,7 +150,7 @@ connects the application to the triage engine.
               +----------------------+
               |     Flask Backend    |
               | /assess /reassess    |
-              | /health              |
+              |       /health        |
               +----------+-----------+
                          |
                          v
