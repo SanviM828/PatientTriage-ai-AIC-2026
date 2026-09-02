@@ -476,7 +476,7 @@ Clone the repository:
 `
 ```bash
 git clone <repository-url>
-cd PatientTriage-ai-AIC-2026-
+cd PatientTriage-ai-AIC-2026
 ```
 
 Install Flask using pip:
@@ -543,22 +543,22 @@ Once the dashboard loads, users can:
 ## 9.5 Project Structure
 
 ```text
-PatientTriage-ai-AIC-2026-/
-│
-├── app.py
-├── triage_engine.py
+PatientTriage-ai-AIC-2026/
 ├── README.md
 ├── .gitignore
-│
-├── templates/
-│   └── index.html
-│
-├── static/
-│   ├── app.js
-│   └── style.css
-│
-└── docs/
-    └── screenshots/
+├─code
+  ├── app.py
+  ├── triage_engine.py
+  │
+  ├── templates/
+  │   └── index.html
+  │
+  ├── static/
+  │   ├── app.js
+  │   └── style.css
+  │
+  └── docs/
+      └── screenshots/
 ```
 
 ### Main Components
