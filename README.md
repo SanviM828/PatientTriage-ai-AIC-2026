@@ -592,6 +592,7 @@ Production-Ready Decision Support
 The prototype requires:
 
 - **Python 3.9 or later**
+- **Flask**
 - **pip**
 - A modern web browser
 - **Git** (for cloning the repository)
@@ -601,11 +602,19 @@ The current prototype uses Flask as its backend dependency. No external database
 ## 10.2 Installation
 
 Clone the repository:
-
+`
 ```bash
 git clone <repository-url>
 cd PatientTriage-ai-AIC-2026-
 ```
+
+Install Flask using pip:
+
+```bash
+pip install Flask
+```
+
+The prototype can then be run directly using the Flask application.
 
 Create a virtual environment:
 
@@ -625,12 +634,6 @@ venv\Scripts\activate
 
 ```bash
 source venv/bin/activate
-```
-
-Install the required dependencies:
-
-```bash
-pip install -r requirements.txt
 ```
 
 ## 10.3 Running Flask
@@ -673,7 +676,6 @@ PatientTriage-ai-AIC-2026-/
 │
 ├── app.py
 ├── triage_engine.py
-├── requirements.txt
 ├── README.md
 ├── .gitignore
 │
@@ -697,7 +699,6 @@ PatientTriage-ai-AIC-2026-/
 | `templates/index.html` | Main application interface |
 | `static/app.js` | Frontend logic and user interactions |
 | `static/style.css` | Application styling and layout |
-| `requirements.txt` | Python dependencies |
 | `docs/screenshots/` | Documentation and demonstration screenshots |
 
 The separation between the frontend, Flask API layer, and triage engine keeps the main components modular and makes the assessment logic easier to inspect and test.
