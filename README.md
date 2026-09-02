@@ -239,10 +239,10 @@ conditions. The main priority levels are:
 CRITICAL
    |
    v
-HIGH
+ HIGH
    |
    v
-URGENT
+ URGENT
    |
    v
 URGENT REVIEW
